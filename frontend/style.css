@@ -1,0 +1,72 @@
+/* Configuración general y tipografía estilo Notion */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fbfbfa; /* Gris ultra claro de fondo */
+    color: #37352f; /* El color de texto casi negro de Notion */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #7a7a76;
+    margin: 0;
+}
+
+/* El contenedor del tablero usa Flexbox para alinear las columnas horizontalmente */
+.kanban-board {
+    display: flex;
+    gap: 20px; /* Separación entre columnas */
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo para cada una de las 3 columnas */
+.kanban-column {
+    background-color: #f4f5f6; /* Fondo gris suave para la columna */
+    flex: 1; /* Hace que las 3 columnas midan exactamente lo mismo */
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 400px;
+}
+
+.kanban-column h2 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-left: 5px;
+}
+
+/* Contenedor interno donde caerán las tarjetas */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 350px;
+}
+
+/* Estilo de la tarjeta de tarea individual */
+.kanban-card {
+    background-color: #ffffff;
+    padding: 14px;
+    border-radius: 6px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); /* Sombra ligera profesional */
+    border: 1px solid #edece9;
+    cursor: grab; /* Cambia el cursor para indicar que se puede mover */
+}
+
+.kanban-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
