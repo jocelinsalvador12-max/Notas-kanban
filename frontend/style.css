@@ -1,8 +1,11 @@
-/* Configuración general y tipografía estilo Notion */
+/* Configuración general con el fondo degradado suave y relajante */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fbfbfa; /* Gris ultra claro de fondo */
-    color: #37352f; /* El color de texto casi negro de Notion */
+    /* Degradado lineal extraído de tu última imagen */
+    background: linear-gradient(180deg, #963eff 0%, #5263f9 100%);
+    /* Evita que el fondo se corte si tienes muchas tareas hacia abajo */
+    background-attachment: fixed;
+    color: #37352f; 
     margin: 0;
     padding: 20px;
 }
@@ -15,10 +18,11 @@ header {
 header h1 {
     font-size: 2rem;
     margin-bottom: 5px;
+    color: #ffffff; /* 👇 Cambiado a blanco para que resalte */
 }
 
 header p {
-    color: #7a7a76;
+    color: #e2e2e2; /* 👇 Cambiado a un gris claro súper limpio */
     margin: 0;
 }
 
@@ -69,4 +73,47 @@ header p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
+}
+
+/* Contenedor del buscador de tareas */
+.add-task-container {
+    max-width: 1200px;
+    margin: 0 auto 25px auto;
+    display: flex;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+/* El campo de texto estilo input de Notion */
+#task-input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    border: 1px solid #edece9;
+    background-color: #ffffff;
+    color: #37352f;
+    outline: none;
+}
+
+#task-input:focus {
+    border-color: #2383e2; /* Azul sutil al dar clic */
+    box-shadow: 0 0 0 3px rgba(35, 131, 226, 0.15);
+}
+
+/* El botón de agregar */
+#add-task-btn {
+    background-color: #2383e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#add-task-btn:hover {
+    background-color: #1a6ab4;
 }
