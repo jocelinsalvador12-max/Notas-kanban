@@ -117,3 +117,31 @@ header p {
 #add-task-btn:hover {
     background-color: #1a6ab4;
 }
+
+/* Hacer que la tarjeta use Flexbox para alinear el texto y el botón X */
+.kanban-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: all 0.2s ease; /* Animación para cuando aparezca/desaparezca */
+}
+
+/* Estilo para el botón de eliminar */
+.delete-card-btn {
+    background: none;
+    border: none;
+    color: #a3a3a3;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+/* Efecto cuando pasas el mouse por encima de la X */
+.delete-card-btn:hover {
+    background-color: #fee2e2; /* Fondo rojo sutil */
+    color: #ef4444; /* X de color rojo */
+}
