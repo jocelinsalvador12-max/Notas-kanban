@@ -8,6 +8,23 @@ const dropzones = document.querySelectorAll('.dropzone');
 let draggedCard = null;
 
 // ==========================================
+// 1.5 LÓGICA PARA BORRAR LA TARJETA INICIAL
+// ==========================================
+const initialCard = document.querySelector('.kanban-column .kanban-card');
+if (initialCard) {
+    const initialDeleteBtn = initialCard.querySelector('.delete-card-btn');
+    if (initialDeleteBtn) {
+        initialDeleteBtn.addEventListener('click', () => {
+            initialCard.style.opacity = '0';
+            initialCard.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                initialCard.remove();
+            }, 200);
+        });
+    }
+}
+
+// ==========================================
 // 2. EVENTOS PARA LAS TARJETAS EXISTENTES
 // ==========================================
 cards.forEach(card => {
