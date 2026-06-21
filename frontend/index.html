@@ -3,49 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Tablero Kanban - Estilo Notion</title>
+    <title>Jocelin's Notion</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>📚QuickNote</h1>
-        <p>Gestiona tus proyectos de forma ágil</p>
-    </header>
+    <div class="notion-layout">
+        <!-- 1. BARRA LATERAL OSCURA (SIDEBAR) -->
+        <aside class="notion-sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">📝 Mis Notas</div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-item active">🏠 Inicio</div>
+                <div class="menu-item">⭐ Favoritos</div>
+                
+                <div class="menu-section">Escuela</div>
+                <div class="menu-item sub">📚 Semestre Actual</div>
+                <div class="menu-item sub">💻 Proyectos</div>
+                <div class="menu-item sub">📅 Horarios y Tareas</div>
+                
+                <div class="menu-section">Personal</div>
+                <div class="menu-item sub">💡 Notas</div>
+                <div class="menu-item sub">🚀 Metas y Objetivos</div>
+                
+                <div class="menu-section">Ajustes</div>
+                <div class="menu-item">🗑️ Papelera</div>
+                <div class="menu-item">⚙️ Configuración</div>
+            </nav>
+        </aside>
 
-    <div class="add-task-container">
-        <input type="text" id="task-input" placeholder="Escribe alguna tarea aquí..." autocomplete="off">
-        <button id="add-task-btn">＋ Añadir tarea</button>
+        <!-- 2. CONTENIDO PRINCIPAL (ESTILO NOTION HOME) -->
+        <main class="notion-main">
+            <header class="notion-header">
+                <h1 id="welcome-title">Buenas tardes 😊</h1>
+            </header>
+            <!-- Sección de Páginas Recientes -->
+            <section class="pages-section">
+                <p class="section-title">⏱️ Páginas recientes</p>
+                
+                <div class="cards-grid">
+                    <!-- Tarjeta 1 -->
+                    <div class="notion-page-card">
+                        <div class="page-icon">📘</div>
+                        <div class="page-info">
+                            <h3>clase 1</h3>
+                            <span>20 feb</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2 -->
+                    <div class="notion-page-card highlight">
+                        <div class="page-icon">🤍</div>
+                        <div class="page-info">
+                            <h3>Pendientes</h3>
+                            <span>23 mar 2025</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3 -->
+                    <div class="notion-page-card">
+                        <div class="page-icon">🎀</div>
+                        <div class="page-info">
+                            <h3>Ing. Sistemas Computacionales</h3>
+                            <span>16 mar 2025</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4 -->
+                    <div class="notion-page-card">
+                        <div class="page-icon">📄</div>
+                        <div class="page-info">
+                            <h3>@Hoy 17:38</h3>
+                            <span>Hace 3 min</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta de Crear Nueva Página -->
+                    <div class="notion-page-card create-card">
+                        <div class="page-icon">➕</div>
+                        <div class="page-info">
+                            <h3>Nueva página</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <main class="kanban-board">
-        
-        <section class="kanban-column" id="to-do">
-            <h2>📌 Por Hacer</h2>
-            <div class="cards-container dropzone">
-        
-                <div class="kanban-card" draggable="true">
-                    <p>Aprender las bases de Git con GitHub Desktop 🚀</p>
-                    <button class="delete-card-btn">×</button>
-                </div>
-
-            </div>
-        </section> 
-
-        <section class="kanban-column" id="in-progress">
-            <h2>⚡ En Progreso</h2>
-            <div class="cards-container dropzone">
-                </div>
-        </section>
-
-        <section class="kanban-column" id="done">
-            <h2>✅ Terminado</h2>
-            <div class="cards-container dropzone">
-                </div>
-        </section>
-
-    </main>
-
     <script src="app.js"></script>
+
 </body>
 </html>
