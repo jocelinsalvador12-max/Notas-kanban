@@ -1,72 +1,113 @@
 // ==========================================
-// 0. SALUDO DINÁMICO BLINDADO (CON LOCALSTORAGE)
+// 0. SALUDO DINÁMICO BLINDADO CON RESPALDO
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Intentar obtener el nombre guardado de la memoria
-    const nombreGuardado = localStorage.getItem('nombreUsuario');
+    let nombreGuardado = localStorage.getItem('nombreUsuario');
     const tituloBienvenida = document.getElementById('welcome-title');
     
-    // 2. Calcular el saludo correcto según la hora real de tu computadora
+    if (!nombreGuardado || nombreGuardado.trim() === "") {
+        nombreGuardado = "joce"; 
+    }
+    
     const hora = new Date().getHours();
     let saludoBase = "Buenas noches";
-    
-    if (hora >= 6 && hora < 12) {
-        saludoBase = "Buenos días";
-    } else if (hora >= 12 && hora < 19) {
-        saludoBase = "Buenas tardes";
-    }
+    if (hora >= 6 && hora < 12) saludoBase = "Buenos días";
+    else if (hora >= 12 && hora < 19) saludoBase = "Buenas tardes";
 
-    // 3. Si encontramos el contenedor en el HTML, actualizamos el texto
     if (tituloBienvenida) {
-        if (nombreGuardado && nombreGuardado.trim() !== "") {
-            // Si hay un nombre registrado, lo saludamos de forma personalizada
-            tituloBienvenida.textContent = `${saludoBase}, ${nombreGuardado} 😊`;
-        } else {
-            // Si por alguna razón falló el guardado, ponemos un saludo genérico
-            tituloBienvenida.textContent = `${saludoBase} 😊`;
-        }
+        tituloBienvenida.textContent = `${saludoBase}, ${nombreGuardado} 😊`;
     }
+    
+    // Inicializar el enrutador de la barra lateral
+    initSidebarNavigation();
+    // Inicializar lógicas de las secciones
+    initTaskManagement();
+    initNotesManagement();
 });
 
 // ==========================================
-// 1. LÓGICA DE INTERACCIÓN CON LAS TARJETAS NOTION
+// 1. MOTOR DE NAVEGACIÓN (INTERCAMBIO DE VISTAS)
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const cardsContainer = document.querySelector('.cards-grid');
+function initSidebarNavigation() {
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    // Mapeo exacto entre el texto del botón y el ID de la sección HTML
+    const sectionsMap = {
+        '🏠 Inicio': 'sec-inicio',
+        '⭐ Favoritos': 'sec-favoritos',
+        '📚 Semestre Actual': 'sec-inicio', // Redirige a inicio de momento
+        '📅 Horarios y Tareas': 'sec-tareas', // Soporte a textos anteriores
+        'Tareas': 'sec-tareas',
+        'Horarios': 'sec-horarios',
+        'Notas': 'sec-notas',
+        'Biblioteca': 'sec-biblioteca'
+    };
 
-    if (cardsContainer) {
-        // Escuchar clics en la rejilla para manejar la creación o eliminación de tarjetas
-        cardsContainer.addEventListener('click', (e) => {
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Remover estado activo visual del menú anterior
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            // Limpiar texto para identificar la sección limpia
+            const itemText = item.textContent.replace(/[📝🏠⭐📚💻📅💡🚀🗑️⚙️]/g, '').trim();
             
-            // Si el usuario da clic en la tarjeta especial de "Nueva página"
-            const createCard = e.target.closest('.create-card');
-            if (createCard) {
-                const tituloNota = prompt("¿Cómo se llamará tu nueva nota?");
-                if (tituloNota && tituloNota.trim() !== "") {
-                    createNewNotionCard(tituloNota.trim(), createCard);
-                }
+            // Buscar la sección correspondiente
+            let targetSectionId = sectionsMap[item.textContent.trim()] || sectionsMap[itemText];
+            
+            if (targetSectionId) {
+                // Ocultar todas las secciones primero
+                document.querySelectorAll('.notion-section').forEach(sec => sec.classList.add('d-none'));
+                // Mostrar la sección seleccionada
+                document.getElementById(targetSectionId).classList.remove('d-none');
             }
         });
-    }
-});
+    });
+}
 
-// Función para crear dinámicamente nuevas tarjetas estilo Notion
-function createNewNotionCard(title, buttonCard) {
-    const cardsGrid = document.querySelector('.cards-grid');
-    
-    // Crear el contenedor de la tarjeta
-    const newCard = document.createElement('div');
-    newCard.classList.add('notion-page-card');
-    
-    // Insertar el diseño interno idéntico a las anteriores
-    newCard.innerHTML = `
-        <div class="page-icon">📄</div>
-        <div class="page-info">
-            <h3>${title}</h3>
-            <span>Hace un momento</span>
-        </div>
-    `;
-    
-    // Insertar la nueva tarjeta justo antes del botón de crear "Nueva página"
-    cardsGrid.insertBefore(newCard, buttonCard);
+// ==========================================
+// 2. INTERACTIVIDAD DE LA SECCIÓN TAREAS
+// ==========================================
+function initTaskManagement() {
+    const btnAddTask = document.getElementById('btn-add-task');
+    if (!btnAddTask) return;
+
+    btnAddTask.addEventListener('click', () => {
+        const title = document.getElementById('task-title').value;
+        const start = document.getElementById('task-start').value;
+        const end = document.getElementById('task-end').value;
+
+        if (!title.trim()) return alert("Escribe el nombre de la tarea");
+
+        const list = document.getElementById('task-list-render');
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>📌 ${title}</strong> — <small>Inicio: ${start || 'Sin fecha'} | Vence: ${end || 'Sin fecha'}</small>`;
+        list.appendChild(li);
+
+        // Limpiar inputs
+        document.getElementById('task-title').value = "";
+        document.getElementById('task-start').value = "";
+        document.getElementById('task-end').value = "";
+    });
+}
+
+// ==========================================
+// 3. INTERACTIVIDAD DE LA SECCIÓN NOTAS
+// ==========================================
+function initNotesManagement() {
+    const btnAddNote = document.getElementById('btn-add-note');
+    if (!btnAddNote) return;
+
+    btnAddNote.addEventListener('click', () => {
+        const text = document.getElementById('note-text').value;
+        if (!text.trim()) return alert("El apunte no puede estar vacío");
+
+        const container = document.getElementById('notes-container-render');
+        const card = document.createElement('div');
+        card.classList.add('note-item-card');
+        card.innerHTML = `<p>${text}</p><small style="color:#888;">✍️ Guardado hoy</small>`;
+        container.appendChild(card);
+
+        document.getElementById('note-text').value = "";
+    });
 }

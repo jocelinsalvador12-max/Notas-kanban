@@ -20,67 +20,26 @@
                 <div class="menu-item">⭐ Favoritos</div>
                 
                 <div class="menu-section">Escuela</div>
-                <div class="menu-item sub">📚 Semestre Actual</div>
-                <div class="menu-item sub">💻 Proyectos</div>
-                <div class="menu-item sub">📅 Horarios y Tareas</div>
+                <div class="menu-item sub">Tareas</div>
+                <div class="menu-item sub">Horarios</div>
                 
                 <div class="menu-section">Personal</div>
-                <div class="menu-item sub">💡 Notas</div>
-                <div class="menu-item sub">🚀 Metas y Objetivos</div>
+                <div class="menu-item sub">Notas</div>
+                <div class="menu-item sub">Biblioteca</div>
                 
-                <div class="menu-section">Ajustes</div>
-                <div class="menu-item">🗑️ Papelera</div>
-                <div class="menu-item">⚙️ Configuración</div>
             </nav>
         </aside>
 
         <!-- 2. CONTENIDO PRINCIPAL (ESTILO NOTION HOME) -->
         <main class="notion-main">
             <header class="notion-header">
-                <h1 id="welcome-title">Buenas tardes 😊</h1>
+                <h1 id="welcome-title">Buenas noches, joce 😊</h1>
             </header>
-            <!-- Sección de Páginas Recientes -->
-            <section class="pages-section">
+
+            <div id="sec-inicio" class="notion-section">
                 <p class="section-title">⏱️ Páginas recientes</p>
                 
                 <div class="cards-grid">
-                    <!-- Tarjeta 1 -->
-                    <div class="notion-page-card">
-                        <div class="page-icon">📘</div>
-                        <div class="page-info">
-                            <h3>clase 1</h3>
-                            <span>20 feb</span>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 2 -->
-                    <div class="notion-page-card highlight">
-                        <div class="page-icon">🤍</div>
-                        <div class="page-info">
-                            <h3>Pendientes</h3>
-                            <span>23 mar 2025</span>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 3 -->
-                    <div class="notion-page-card">
-                        <div class="page-icon">🎀</div>
-                        <div class="page-info">
-                            <h3>Ing. Sistemas Computacionales</h3>
-                            <span>16 mar 2025</span>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 4 -->
-                    <div class="notion-page-card">
-                        <div class="page-icon">📄</div>
-                        <div class="page-info">
-                            <h3>@Hoy 17:38</h3>
-                            <span>Hace 3 min</span>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta de Crear Nueva Página -->
                     <div class="notion-page-card create-card">
                         <div class="page-icon">➕</div>
                         <div class="page-info">
@@ -88,7 +47,80 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+
+            <div id="sec-favoritos" class="notion-section d-none">
+                <p class="section-title">⭐ Elementos Marcados como Favoritos</p>
+                <div class="placeholder-box">
+                    <p>Aquí se reflejarán las notas y tareas que califiques con estrella.</p>
+                </div>
+            </div>
+
+            <div id="sec-tareas" class="notion-section d-none">
+                <p class="section-title">📅 Gestión de Tareas Académicas</p>
+                <div class="app-form-box">
+                    <input type="text" id="task-title" placeholder="Título de la tarea...">
+                    <div class="form-row">
+                        <label>Inicio: <input type="date" id="task-start"></label>
+                        <label>Vence: <input type="date" id="task-end"></label>
+                    </div>
+                    <button id="btn-add-task">Agregar Tarea</button>
+                </div>
+                <ul id="task-list-render" class="styled-list"></ul>
+            </div>
+
+            <div id="sec-horarios" class="notion-section d-none">
+                <p class="section-title">⏰ Horario de Clases Semanal</p>
+                <div class="table-container">
+                    <table class="editable-table">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miércoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="07:00 - 09:00"></td>
+                                <td><input type="text" value="Cálculo"></td>
+                                <td><input type="text" value="Sistemas"></td>
+                                <td><input type="text" value="Cálculo"></td>
+                                <td><input type="text" value="Sistemas"></td>
+                                <td><input type="text" value="Inglés"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" value="09:00 - 11:00"></td>
+                                <td><input type="text" value="Estructuras"></td>
+                                <td><input type="text" value="Física"></td>
+                                <td><input type="text" value="Estructuras"></td>
+                                <td><input type="text" value="Física"></td>
+                                <td><input type="text" value="Simulación"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-notas" class="notion-section d-none">
+                <p class="section-title">📝 Bloc de Notas Rápidas</p>
+                <div class="app-form-box">
+                    <textarea id="note-text" placeholder="Escribe el contenido de tu apunte o clase aquí..." rows="4"></textarea>
+                    <button id="btn-add-note">Guardar Nota</button>
+                </div>
+                <div id="notes-container-render" class="notes-grid-layout"></div>
+            </div>
+
+            <div id="sec-biblioteca" class="notion-section d-none">
+                <p class="section-title">📚 Repositorio General (Biblioteca)</p>
+                <div class="placeholder-box">
+                    <p>Historial y respaldo de cada elemento registrado en la aplicación.</p>
+                </div>
+            </div>
+
         </main>
     </div>
 
