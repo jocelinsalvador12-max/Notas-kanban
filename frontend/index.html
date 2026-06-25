@@ -8,39 +8,43 @@
 </head>
 <body>
 
-    <div class="notion-layout">
-        <!-- 1. BARRA LATERAL OSCURA (SIDEBAR) -->
+    <div class="notion-container">
+
         <aside class="notion-sidebar">
-            <div class="sidebar-header">
-                <div class="user-profile">📝 Mis Notas</div>
-            </div>
-            
-            <nav class="sidebar-menu">
-                <div class="menu-item active">🏠 Inicio</div>
-                <div class="menu-item">⭐ Favoritos</div>
-                
-                <div class="menu-section">Escuela</div>
-                <div class="menu-item sub">Tareas</div>
-                <div class="menu-item sub">Horarios</div>
-                
-                <div class="menu-section">Personal</div>
-                <div class="menu-item sub">Notas</div>
-                <div class="menu-item sub">Biblioteca</div>
-                
-            </nav>
+            <div class="sidebar-title">📝 Mis Notas</div>
+            <ul class="menu-list">
+                <li class="menu-item active">🏠 Inicio</li>
+                <li class="menu-item">⭐ Favoritos</li>
+                <li class="menu-item">📚 Biblioteca</li>
+                <li class="menu-item">📖 Tareas</li>
+                <li class="menu-item">⏰ Horarios</li>
+                <li class="menu-item">Notas</li>
+            </ul>
         </aside>
 
-        <!-- 2. CONTENIDO PRINCIPAL (ESTILO NOTION HOME) -->
         <main class="notion-main">
             <header class="notion-header">
-                <h1 id="welcome-title">Buenas noches, joce 😊</h1>
+                <div class="header-top">
+                    <h1 id="welcome-title">Buenas noches, jocelin 😊</h1>
+                    <div id="notes-counter" class="badge-counter">Notas totales: 0</div>
+                </div>
+                
+                <div class="extra-controls">
+                    <select id="bg-color-picker" class="styled-select">
+                        <option value="default">🌌 Fondo Original</option>
+                        <option value="theme-lila">🔮 Lila Desaturado</option>
+                        <option value="theme-amarillo">💛 Amarillo Pastel</option>
+                        <option value="theme-oliva">🌿 Oliva Claro</option>
+                        <option value="theme-purpura">🍇 Púrpura Profundo</option>
+                        <option value="theme-hueso">🦴 Blanco Hueso</option>
+                    </select>
+                </div>
             </header>
 
             <div id="sec-inicio" class="notion-section">
                 <p class="section-title">⏱️ Páginas recientes</p>
-                
                 <div class="cards-grid">
-                    <div class="notion-page-card create-card">
+                    <div class="notion-page-card create-card" id="btn-trigger-new-page">
                         <div class="page-icon">➕</div>
                         <div class="page-info">
                             <h3>Nueva página</h3>
@@ -50,21 +54,18 @@
             </div>
 
             <div id="sec-favoritos" class="notion-section d-none">
-                <p class="section-title">⭐ Elementos Marcados como Favoritos</p>
-                <div class="placeholder-box">
-                    <p>Aquí se reflejarán las notas y tareas que califiques con estrella.</p>
-                </div>
+                <p class="section-title">⭐ Mis Notas Favoritas</p>
+                <div id="fav-notes-render" class="notes-grid-layout"></div>
             </div>
 
             <div id="sec-tareas" class="notion-section d-none">
-                <p class="section-title">📅 Gestión de Tareas Académicas</p>
+                <p class="section-title">📖 Control de Tareas Pendientes</p>
                 <div class="app-form-box">
-                    <input type="text" id="task-title" placeholder="Título de la tarea...">
+                    <input type="text" id="task-title" placeholder="¿Qué tarea tienes pendiente?">
                     <div class="form-row">
-                        <label>Inicio: <input type="date" id="task-start"></label>
-                        <label>Vence: <input type="date" id="task-end"></label>
+                        <label>Fecha Límite: <input type="date" id="task-deadline"></label>
                     </div>
-                    <button id="btn-add-task">Agregar Tarea</button>
+                    <button id="btn-add-task">Añadir Tarea</button>
                 </div>
                 <ul id="task-list-render" class="styled-list"></ul>
             </div>
@@ -92,39 +93,43 @@
                                 <td><input type="text" value="Sistemas"></td>
                                 <td><input type="text" value="Inglés"></td>
                             </tr>
-                            <tr>
-                                <td><input type="text" value="09:00 - 11:00"></td>
-                                <td><input type="text" value="Estructuras"></td>
-                                <td><input type="text" value="Física"></td>
-                                <td><input type="text" value="Estructuras"></td>
-                                <td><input type="text" value="Física"></td>
-                                <td><input type="text" value="Simulación"></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div id="sec-notas" class="notion-section d-none">
-                <p class="section-title">📝 Bloc de Notas Rápidas</p>
+                <p class="section-title">📝 Editor de Notas</p>
                 <div class="app-form-box">
-                    <textarea id="note-text" placeholder="Escribe el contenido de tu apunte o clase aquí..." rows="4"></textarea>
+                    <input type="hidden" id="edit-note-id">
+                    <input type="text" id="note-title-input" placeholder="Título de la nota..." style="font-weight: bold;">
+                    <textarea id="note-text" placeholder="Escribe el contenido de tu apunte aquí..." rows="4"></textarea>
+                    <div class="form-row">
+                        <label>Categoría:
+                            <select id="note-category" class="styled-select">
+                                <option value="Escuela">📚 Escuela</option>
+                                <option value="Personal">💡 Personal</option>
+                                <option value="Trabajo">💼 Trabajo</option>
+                            </select>
+                        </label>
+                    </div>
                     <button id="btn-add-note">Guardar Nota</button>
                 </div>
-                <div id="notes-container-render" class="notes-grid-layout"></div>
             </div>
 
             <div id="sec-biblioteca" class="notion-section d-none">
-                <p class="section-title">📚 Repositorio General (Biblioteca)</p>
-                <div class="placeholder-box">
-                    <p>Historial y respaldo de cada elemento registrado en la aplicación.</p>
+                <p class="section-title">📚 Biblioteca General de Notas</p>
+                <div class="search-filter-bar">
+                    <input type="text" id="search-input" placeholder="🔍 Buscar nota por nombre...">
+                    <select id="sort-select" class="styled-select">
+                        <option value="date-desc">📅 Más recientes primero</option>
+                        <option value="alpha-asc">🔤 Alfabético (A-Z)</option>
+                    </select>
                 </div>
+                <div id="library-notes-render" class="notes-grid-layout"></div>
             </div>
-
         </main>
-    </div>
 
-    <script src="app.js"></script>
-
+    </div> <script src="app.js"></script>
 </body>
 </html>
